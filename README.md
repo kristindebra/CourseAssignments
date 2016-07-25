@@ -64,3 +64,5 @@ summary(anscombe)
     ##  Mean   : 7.501   Mean   :7.501   Mean   : 7.50   Mean   : 7.501  
     ##  3rd Qu.: 8.570   3rd Qu.:8.950   3rd Qu.: 7.98   3rd Qu.: 8.190  
     ##  Max.   :10.840   Max.   :9.260   Max.   :12.74   Max.   :12.500
+
+<img src="./figures/xy_plot-1.svg"  /> Figure 1: A scatter plot showing x1 against y1 from the anscombe dataset, with a line of regression of y1 on x1

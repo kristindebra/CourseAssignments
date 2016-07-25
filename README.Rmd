@@ -24,3 +24,11 @@ tail(anscombe)
 summary(anscombe)
 
 ```
+
+``` {r xy_plot, echo=FALSE, fig.height=8, fig.width=8, fig.align='CENTRE', fig.path= './figures/', fig.ext='svg'}
+data("anscombe")
+plot(x = anscombe$x1, y = anscombe$y1)
+line <- lm(y1 ~ x1, data = anscombe)
+abline(line)
+```
+Figure 1: A scatter plot showing x1 against y1 from the anscombe dataset, with a line of regression of y1 on x1
