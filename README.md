@@ -66,3 +66,237 @@ summary(anscombe)
     ##  Max.   :10.840   Max.   :9.260   Max.   :12.74   Max.   :12.500
 
 <img src="./figures/xy_plot-1.svg"  /> Figure 1: A scatter plot showing x1 against y1 from the anscombe dataset, with a line of regression of y1 on x1
+
+Assignment4
+===========
+
+``` r
+library(readr)
+df <- read_csv("analgesic.csv")
+```
+
+``` r
+dim(df)
+```
+
+    ## [1] 40  5
+
+``` r
+colnames(df)
+```
+
+    ## [1] "ID"            "Group"         "Measurement_1" "Measurement_2"
+    ## [5] "Measurement_3"
+
+``` r
+head(df, n=6)
+```
+
+    ##   ID     Group Measurement_1 Measurement_2 Measurement_3
+    ## 1  1 Analgesic            26            26            21
+    ## 2  2 Analgesic            29            26            23
+    ## 3  3 Analgesic            24            28            22
+    ## 4  4 Analgesic            25            22            24
+    ## 5  5 Analgesic            24            28            23
+    ## 6  6 Analgesic            22            23            26
+
+``` r
+tail(df, n=6)
+```
+
+    ##    ID   Group Measurement_1 Measurement_2 Measurement_3
+    ## 35 35 Placebo            17            21            15
+    ## 36 36 Placebo            19            17            15
+    ## 37 37 Placebo            14            19            13
+    ## 38 38 Placebo            17            19            13
+    ## 39 39 Placebo            11            20            18
+    ## 40 40 Placebo            15            18            12
+
+``` r
+summary(df)
+```
+
+    ##        ID           Group           Measurement_1   Measurement_2 
+    ##  Min.   : 1.00   Length:40          Min.   :10.00   Min.   : 8.0  
+    ##  1st Qu.:10.75   Class :character   1st Qu.:17.00   1st Qu.:17.0  
+    ##  Median :20.50   Mode  :character   Median :20.00   Median :20.0  
+    ##  Mean   :20.50                      Mean   :20.12   Mean   :20.7  
+    ##  3rd Qu.:30.25                      3rd Qu.:24.00   3rd Qu.:25.0  
+    ##  Max.   :40.00                      Max.   :30.00   Max.   :32.0  
+    ##  Measurement_3  
+    ##  Min.   :12.00  
+    ##  1st Qu.:16.00  
+    ##  Median :20.50  
+    ##  Mean   :20.52  
+    ##  3rd Qu.:24.25  
+    ##  Max.   :30.00
+
+``` r
+library(tidyr)
+library(dplyr)
+```
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
+library(readr)
+
+#Tidy the data from a wide to long format
+df.new <- gather(data=df,key=Measurement, value= data, Measurement_1:Measurement_3)
+
+#Group by Measurement coloumn
+grouping <- group_by(df.new, Group)
+
+#Group by ID coloumn
+grouping2 <- group_by(grouping, ID)
+
+sum <- summarize(grouping2, mean(Measurement))
+```
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
+    ## "Measurement_3": argument is not numeric or logical: returning NA
+
+``` r
+sum 
+```
+
+    ## # A tibble: 40 x 2
+    ##       ID mean(Measurement)
+    ##    <int>             <lgl>
+    ## 1      1                NA
+    ## 2      2                NA
+    ## 3      3                NA
+    ## 4      4                NA
+    ## 5      5                NA
+    ## 6      6                NA
+    ## 7      7                NA
+    ## 8      8                NA
+    ## 9      9                NA
+    ## 10    10                NA
+    ## # ... with 30 more rows

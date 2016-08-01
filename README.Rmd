@@ -32,3 +32,37 @@ line <- lm(y1 ~ x1, data = anscombe)
 abline(line)
 ```
 Figure 1: A scatter plot showing x1 against y1 from the anscombe dataset, with a line of regression of y1 on x1
+
+#Assignment4
+```{r data_import, echo=TRUE}
+library(readr)
+df <- read_csv("analgesic.csv")
+```
+
+```{r data_summary, echo=TRUE}
+dim(df)
+colnames(df)
+head(df, n=6)
+tail(df, n=6)
+summary(df)
+```
+
+```{r data_tidy, echo=TRUE}
+library(tidyr)
+library(dplyr)
+library(readr)
+
+#Tidy the data from a wide to long format
+df.new <- gather(data=df,key=Measurement, value= data, Measurement_1:Measurement_3)
+
+#Group by Measurement coloumn
+grouping <- group_by(df.new, Group)
+
+#Group by ID coloumn
+grouping2 <- group_by(grouping, ID)
+
+#Get the mean for each individual's measurements
+sum <- summarize(grouping2, mean(Measurement))
+
+sum 
+```
