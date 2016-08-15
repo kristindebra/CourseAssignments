@@ -9,6 +9,9 @@ I love Octocat. She???s the coolest cat in town.
 
 ![](https://dl.dropboxusercontent.com/u/11805474/painblogr/biostats/images/octocat.png)
 
+Assignment 2
+============
+
 ``` r
 data("anscombe")
 dim(anscombe)
@@ -64,6 +67,9 @@ summary(anscombe)
     ##  Mean   : 7.501   Mean   :7.501   Mean   : 7.50   Mean   : 7.501  
     ##  3rd Qu.: 8.570   3rd Qu.:8.950   3rd Qu.: 7.98   3rd Qu.: 8.190  
     ##  Max.   :10.840   Max.   :9.260   Max.   :12.74   Max.   :12.500
+
+Assignment 3
+============
 
 <img src="./figures/xy_plot-1.svg"  /> Figure 1: A scatter plot showing x1 against y1 from the anscombe dataset, with a line of regression of y1 on x1
 
@@ -148,155 +154,136 @@ library(dplyr)
     ##     intersect, setdiff, setequal, union
 
 ``` r
-library(readr)
-
 #Tidy the data from a wide to long format
-df.new <- gather(data=df,key=Measurement, value= data, Measurement_1:Measurement_3)
-
-#Group by Measurement coloumn
-grouping <- group_by(df.new, Group)
+df.new <- gather(data=df,key=Measurement, value= data, Measurement_1:Measurement_3, na.rm=FALSE, convert=FALSE, factor_key=FALSE)
 
 #Group by ID coloumn
-grouping2 <- group_by(grouping, ID)
+grouping <- group_by(df.new, ID)
 
-sum <- summarize(grouping2, mean(Measurement))
-```
+#Get the mean for each individual's measurements
+printsum <- summarize(grouping, mean(data))
 
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-    ## Warning in mean.default(c("Measurement_1", "Measurement_2",
-    ## "Measurement_3": argument is not numeric or logical: returning NA
-
-``` r
-sum 
+printsum 
 ```
 
     ## # A tibble: 40 x 2
-    ##       ID mean(Measurement)
-    ##    <int>             <lgl>
-    ## 1      1                NA
-    ## 2      2                NA
-    ## 3      3                NA
-    ## 4      4                NA
-    ## 5      5                NA
-    ## 6      6                NA
-    ## 7      7                NA
-    ## 8      8                NA
-    ## 9      9                NA
-    ## 10    10                NA
+    ##       ID mean(data)
+    ##    <int>      <dbl>
+    ## 1      1   24.33333
+    ## 2      2   26.00000
+    ## 3      3   24.66667
+    ## 4      4   23.66667
+    ## 5      5   25.00000
+    ## 6      6   23.66667
+    ## 7      7   26.66667
+    ## 8      8   23.33333
+    ## 9      9   22.66667
+    ## 10    10   24.00000
     ## # ... with 30 more rows
+
+Assignment 5
+------------
+
+### Chicken Weights
+
+**Null hypothesis:** Different feed supplements do not have an effect on chicken weight
+
+**Alternative hypothesis:** Different feed supplements will affect chicken weight The data is unpaired, parametric with more than 2 experimental groups, therefore one-way ANOVA can be used to test the hypothesis.
+
+``` r
+df_chicken <- read_csv("chick-weights.csv")
+boxplot(weight ~ feed, data = df_chicken)
+```
+
+![](README_files/figure-markdown_github/chicken%20(chunk%201)-1.png)
+
+``` r
+chicken_anova <- aov(weight ~ feed, data = df_chicken)
+summary(chicken_anova)
+```
+
+    ##             Df Sum Sq Mean Sq F value   Pr(>F)    
+    ## feed         5 231129   46226   15.37 5.94e-10 ***
+    ## Residuals   65 195556    3009                     
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+p-value = 5.94e-10 ; F-value = 15.37 The p-value is greater than the f-value, therefore we reject the null hypothesis.
+
+Hence, we can conclude that chicken feed does affect chicken weight and therefore growth.
+
+### The Hot Zone
+
+**Null hypothesis:** Contamination of the drinking water did not cause the outbreak of severe gastroenteritis.
+
+**Alternative hypothesis:** Contamination of the drinking water did cause the outbreak of severe gastroenteritis.
+
+The data is unpaired, non-parametric and categorical. Therefore, a Fisher's exact test will be used to test the null hypothesis.
+
+Significance interval set at 95%, reject null hypothesis if p&lt;0.05.
+
+``` r
+df_gastro <- read.csv("gastroenteritis.csv")
+df_table <- table(df_gastro$Consumption, df_gastro$Outcome)
+df_table
+```
+
+    ##                     
+    ##                      ill not ill
+    ##   1 to 4 glasses/day 265     258
+    ##   < 1 glasses/day     39     121
+    ##   > 4 glasses/day    265     146
+
+``` r
+hot_test <- fisher.test(df_table)
+print(hot_test)
+```
+
+    ## 
+    ##  Fisher's Exact Test for Count Data
+    ## 
+    ## data:  df_table
+    ## p-value < 2.2e-16
+    ## alternative hypothesis: two.sided
+
+p-value = 2.2e-16, therefore we reject the null hypothesis. Hence we can conclude that the contaminated water causes severe gastro.
+
+### Nausea
+
+**Null hypothesis:** 5HT3 receptor blocker doesnt reduces nausea in breast cancer patients receiving chemotherpay.
+
+**Alternative hypothesis:** 5HT3 receptor blocker does reduce nausea in breast cancer patients receiving chemotherpay.
+
+The data is paired, parametric and ordinal. Therefore a McNemar's Cho-square test will be used to test the null hypothesis.
+
+``` r
+df_nausea <- read.csv("nausea.csv")              #import dataset
+nausea_new <- df_nausea[-8,-1]                   #clean data by excluding last observation
+nausea_new                                       #call new table
+```
+
+    ##   Nausea_before Nausea_after
+    ## 1             3            2
+    ## 2             4            0
+    ## 3             6            1
+    ## 4             2            3
+    ## 5             2            1
+    ## 6             4            1
+    ## 7             5            0
+
+``` r
+boxplot(nausea_new)                              #create boxplot
+```
+
+![](README_files/figure-markdown_github/nausea%20(chunk3)-1.png)
+
+``` r
+wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)
+```
+
+    ## 
+    ##  Wilcoxon signed rank test with continuity correction
+    ## 
+    ## data:  nausea_new$Nausea_before and nausea_new$Nausea_after
+    ## V = 26, p-value = 0.04983
+    ## alternative hypothesis: true location shift is not equal to 0

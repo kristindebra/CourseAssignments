@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```
 
+#Assignment 2
 ```{r quick_look, echo=TRUE}
 data("anscombe")
 dim(anscombe)
@@ -25,6 +26,7 @@ summary(anscombe)
 
 ```
 
+#Assignment 3
 ``` {r xy_plot, echo=FALSE, fig.height=8, fig.width=8, fig.align='CENTRE', fig.path= './figures/', fig.ext='svg'}
 data("anscombe")
 plot(x = anscombe$x1, y = anscombe$y1)
@@ -50,19 +52,77 @@ summary(df)
 ```{r data_tidy, echo=TRUE}
 library(tidyr)
 library(dplyr)
-library(readr)
 
 #Tidy the data from a wide to long format
-df.new <- gather(data=df,key=Measurement, value= data, Measurement_1:Measurement_3)
-
-#Group by Measurement coloumn
-grouping <- group_by(df.new, Group)
+df.new <- gather(data=df,key=Measurement, value= data, Measurement_1:Measurement_3, na.rm=FALSE, convert=FALSE, factor_key=FALSE)
 
 #Group by ID coloumn
-grouping2 <- group_by(grouping, ID)
+grouping <- group_by(df.new, ID)
 
 #Get the mean for each individual's measurements
-sum <- summarize(grouping2, mean(Measurement))
+printsum <- summarize(grouping, mean(data))
 
-sum 
+printsum 
 ```
+
+#Assignment 5
+###Chicken Weights
+**Null hypothesis:** Different feed supplements do not have an effect on chicken weight
+
+**Alternative hypothesis:** Different feed supplements will affect chicken weight
+
+The data is unpaired, parametric with more than 2 experimental groups, therefore one-way ANOVA can be used to test the hypothesis.
+
+
+```{r chicken (chunk 1), echo=TRUE}
+df_chicken <- read_csv("chick-weights.csv")             #import dataset
+boxplot(weight ~ feed, data = df_chicken)               #create boxplot
+chicken_anova <- aov(weight ~ feed, data = df_chicken)  #perform anova
+summary(chicken_anova)                                  #summarise data
+```
+p-value = 5.94e-10 ; F-value = 15.37
+
+The p-value is greater than the f-value, therefore we reject the null hypothesis.
+
+Hence, we can conclude that chicken feed does affect chicken weight and therefore growth.
+
+###The Hot Zone
+**Null hypothesis:** Contamination of the drinking water did not cause the outbreak of severe gastroenteritis.
+
+**Alternative hypothesis:** Contamination of the drinking water did cause the outbreak of severe gastroenteritis.
+
+The data is unpaired, non-parametric and categorical. Therefore, a Fisher's exact test will be used to test the null hypothesis.
+
+Confidence interval set at 95%, reject null hypothesis if p<0.05.
+```{r hot_zone (chunk 2), echo=TRUE}
+
+df_gastro <- read.csv("gastroenteritis.csv")                 #import dataset
+df_table <- table(df_gastro$Consumption, df_gastro$Outcome)  #create new table
+df_table                                                     #call new table
+
+hot_test <- fisher.test(df_table)                            #perform fisher's exact
+print(hot_test)                                              #print fisher's excat results
+```
+p-value = 2.2e-16, therefore we reject the null hypothesis.
+Hence we can conclude that the contaminated water causes severe gastro.
+
+###Nausea
+
+**Null hypothesis:** 5HT3 receptor blocker doesnt reduces nausea in breast cancer patients receiving chemotherpay.
+
+**Alternative hypothesis:** 5HT3 receptor blocker does reduce nausea in breast cancer patients receiving chemotherpay.
+
+The data is paired, parametric and ordinal. Therefore a Wilcox signed rank test will be used to test the null hypothesis.
+
+```{r nausea (chunk3), echo=TRUE, warning=FALSE}
+df_nausea <- read.csv("nausea.csv")              #import dataset
+nausea_new <- df_nausea[-8,-1]                   #clean data by excluding last observation
+nausea_new                                       #call new table
+boxplot(nausea_new)                              #create boxplot
+
+wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)   #perform Wilcox test
+```
+
+p-value = 0.04983, therefore we reject the null hypothesis.
+
+Therefore, we can conclude that the 5HT3 receptor blocker does reduce nausea in breast cancer patients receiving chemotherapy.
