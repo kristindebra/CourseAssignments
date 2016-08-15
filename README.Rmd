@@ -120,7 +120,8 @@ nausea_new <- df_nausea[-8,-1]                   #clean data by excluding last o
 nausea_new                                       #call new table
 boxplot(nausea_new)                              #create boxplot
 
-wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)   #perform Wilcox test
+wilcox_nausea <- wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)   #perform Wilcox test
+print(wilcox_nausea)
 ```
 
 p-value = 0.04983, therefore we reject the null hypothesis.

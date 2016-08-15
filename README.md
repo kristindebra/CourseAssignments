@@ -182,24 +182,26 @@ printsum
     ## # ... with 30 more rows
 
 Assignment 5
-------------
+============
 
 ### Chicken Weights
 
 **Null hypothesis:** Different feed supplements do not have an effect on chicken weight
 
-**Alternative hypothesis:** Different feed supplements will affect chicken weight The data is unpaired, parametric with more than 2 experimental groups, therefore one-way ANOVA can be used to test the hypothesis.
+**Alternative hypothesis:** Different feed supplements will affect chicken weight
+
+The data is unpaired, parametric with more than 2 experimental groups, therefore one-way ANOVA can be used to test the hypothesis.
 
 ``` r
-df_chicken <- read_csv("chick-weights.csv")
-boxplot(weight ~ feed, data = df_chicken)
+df_chicken <- read_csv("chick-weights.csv")             #import dataset
+boxplot(weight ~ feed, data = df_chicken)               #create boxplot
 ```
 
 ![](README_files/figure-markdown_github/chicken%20(chunk%201)-1.png)
 
 ``` r
-chicken_anova <- aov(weight ~ feed, data = df_chicken)
-summary(chicken_anova)
+chicken_anova <- aov(weight ~ feed, data = df_chicken)  #perform anova
+summary(chicken_anova)                                  #summarise data
 ```
 
     ##             Df Sum Sq Mean Sq F value   Pr(>F)    
@@ -208,7 +210,9 @@ summary(chicken_anova)
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-p-value = 5.94e-10 ; F-value = 15.37 The p-value is greater than the f-value, therefore we reject the null hypothesis.
+p-value = 5.94e-10 ; F-value = 15.37
+
+The p-value is greater than the f-value, therefore we reject the null hypothesis.
 
 Hence, we can conclude that chicken feed does affect chicken weight and therefore growth.
 
@@ -220,12 +224,12 @@ Hence, we can conclude that chicken feed does affect chicken weight and therefor
 
 The data is unpaired, non-parametric and categorical. Therefore, a Fisher's exact test will be used to test the null hypothesis.
 
-Significance interval set at 95%, reject null hypothesis if p&lt;0.05.
+Confidence interval set at 95%, reject null hypothesis if p&lt;0.05.
 
 ``` r
-df_gastro <- read.csv("gastroenteritis.csv")
-df_table <- table(df_gastro$Consumption, df_gastro$Outcome)
-df_table
+df_gastro <- read.csv("gastroenteritis.csv")                 #import dataset
+df_table <- table(df_gastro$Consumption, df_gastro$Outcome)  #create new table
+df_table                                                     #call new table
 ```
 
     ##                     
@@ -235,8 +239,8 @@ df_table
     ##   > 4 glasses/day    265     146
 
 ``` r
-hot_test <- fisher.test(df_table)
-print(hot_test)
+hot_test <- fisher.test(df_table)                            #perform fisher's exact
+print(hot_test)                                              #print fisher's excat results
 ```
 
     ## 
@@ -254,7 +258,7 @@ p-value = 2.2e-16, therefore we reject the null hypothesis. Hence we can conclud
 
 **Alternative hypothesis:** 5HT3 receptor blocker does reduce nausea in breast cancer patients receiving chemotherpay.
 
-The data is paired, parametric and ordinal. Therefore a McNemar's Cho-square test will be used to test the null hypothesis.
+The data is paired, parametric and ordinal. Therefore a Wilcox signed rank test will be used to test the null hypothesis.
 
 ``` r
 df_nausea <- read.csv("nausea.csv")              #import dataset
@@ -278,7 +282,8 @@ boxplot(nausea_new)                              #create boxplot
 ![](README_files/figure-markdown_github/nausea%20(chunk3)-1.png)
 
 ``` r
-wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)
+wilcox_nausea <- wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)   #perform Wilcox test
+print(wilcox_nausea)
 ```
 
     ## 
@@ -287,3 +292,7 @@ wilcox.test(nausea_new$Nausea_before, nausea_new$Nausea_after, paired=TRUE)
     ## data:  nausea_new$Nausea_before and nausea_new$Nausea_after
     ## V = 26, p-value = 0.04983
     ## alternative hypothesis: true location shift is not equal to 0
+
+p-value = 0.04983, therefore we reject the null hypothesis.
+
+Therefore, we can conclude that the 5HT3 receptor blocker does reduce nausea in breast cancer patients receiving chemotherapy.
