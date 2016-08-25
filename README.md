@@ -296,3 +296,129 @@ print(wilcox_nausea)
 p-value = 0.04983, therefore we reject the null hypothesis.
 
 Therefore, we can conclude that the 5HT3 receptor blocker does reduce nausea in breast cancer patients receiving chemotherapy.
+
+Assignment 6
+------------
+
+Housing Prices
+--------------
+
+**Null hypothesis:** Interest rate does not affect the housing prices
+
+**Alternative hypothesis:** Interest rate does affect housing prices
+
+**Assumptions for Pearson's correlation:** The data being analysed is measured on an interval scale, there are no outliers and both the variables are normally distributed.
+
+Evidence for normality and homo skedasticity (seen below):
+
+The residuals are normally distributed as they do fit on the normal qq plot, and they are homoskedastic as they show considerable spread around the 0 abline plotted.
+
+**Assumptions for linear regression:** There is a linear trend between interest rate and house price (linear regression can only be performed if there is significant correlation, shown below). The observations are independent, and x (interest rate) is measured without error. The residuals are normally distributed and they have the same variance for all fitted values of y (house price), and they are homoskedastic.
+
+``` r
+#Import dataset
+df_houses <- read.csv("housing-prices.csv")
+#Plot the data and make it publishable
+plot(df_houses$interest_rate, df_houses$median_house_price_USD, 
+     main = "Scatter Plot Showing Interest Rate Against House Price", 
+     xlab = "Interest rates (%)", 
+     ylab = "Housing prices (USD)", 
+     xlim = c(5, 10),
+     ylim = c(150000, 340000),
+     pch = 18,
+     col = "blue",
+     font.main = 2,
+     cex = 1.5,
+     cex.main = 1.2)
+
+#Perform Pearsons correlation
+houses_test <- with(df_houses, cor.test(x = interest_rate, y = median_house_price_USD, method = 'pearson'))
+
+#Call the pearson's test
+print(houses_test)  
+```
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  interest_rate and median_house_price_USD
+    ## t = -2.6409, df = 14, p-value = 0.01937
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  -0.8339619 -0.1133269
+    ## sample estimates:
+    ##        cor 
+    ## -0.5766386
+
+``` r
+#Linear regression
+house_reg <- lm(median_house_price_USD~interest_rate, data = df_houses)
+
+#Add line of regression
+abline(house_reg, lty = 5)
+```
+
+![](README_files/figure-markdown_github/housing_prices%20(chunk%201)-1.png)
+
+``` r
+#Check for homoskedasticity 
+homo_house <- plot(x = house_reg$fitted, y = house_reg$residuals)
+abline(h = 0)
+```
+
+![](README_files/figure-markdown_github/housing_prices%20(chunk%201)-2.png)
+
+``` r
+#Check for normality
+qqnorm(house_reg$residuals)
+qqline(house_reg$residuals)
+```
+
+![](README_files/figure-markdown_github/housing_prices%20(chunk%201)-3.png)
+
+``` r
+#View model
+summary(house_reg)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = median_house_price_USD ~ interest_rate, data = df_houses)
+    ## 
+    ## Residuals:
+    ##    Min     1Q Median     3Q    Max 
+    ## -55865 -31631 -16406  27212  80735 
+    ## 
+    ## Coefficients:
+    ##               Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)     399229      74427   5.364 9.99e-05 ***
+    ## interest_rate   -24309       9205  -2.641   0.0194 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 43180 on 14 degrees of freedom
+    ##   (1 observation deleted due to missingness)
+    ## Multiple R-squared:  0.3325, Adjusted R-squared:  0.2848 
+    ## F-statistic: 6.974 on 1 and 14 DF,  p-value: 0.01937
+
+**Pearsons correlation results:**
+
+r = -0.44
+
+Therefore we reject the null hypothesis and accept the alternative hypothesis. The correlation is of moderate strentgh, and shows a negative relationship.
+
+p-value = 0.01937
+
+Therefore the correlation is significant and we can plot a linear regression, as seen above.
+
+df = 14, test statistic = -2.6409
+
+**Linear regression results:**
+
+p-value = 0.01937
+
+Degrees of freedom = 14
+
+F-statistic = 6.974
+
+We can conclude that the higher interest rate is associated with a lower house price, and this relationship is significant.
